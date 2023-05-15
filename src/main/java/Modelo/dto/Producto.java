@@ -10,7 +10,6 @@ public class Producto {
 	private int cantidad;
 	private double precio;
 	private Date caducidad;
-	private int id_seccion;
 	public int getId() {
 		return id;
 	}
@@ -47,12 +46,7 @@ public class Producto {
 	public void setCaducidad(Date caducidad) {
 		this.caducidad = caducidad;
 	}
-	public int getId_seccion() {
-		return id_seccion;
-	}
-	public void setId_seccion(int id_seccion) {
-		this.id_seccion = id_seccion;
-	}
+
 	
 	
 	
