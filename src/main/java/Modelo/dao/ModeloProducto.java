@@ -10,13 +10,14 @@ import Modelo.dto.Producto;
 public class ModeloProducto extends Conector {
 
 	public ArrayList<Producto> verProductos() {
+		String sentenciaSelect = "SELECT * FROM productos";
 
 		try {
-			String sentenciaSelect = "SELECT * FROM productos";
 			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
 
 			ArrayList<Producto> productos = new ArrayList<Producto>();
 			ResultSet resultado = pstSelect.executeQuery();
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
 			while (resultado.next()) {
 				Producto producto = new Producto();
 
@@ -26,6 +27,7 @@ public class ModeloProducto extends Conector {
 				producto.setCantidad(resultado.getInt("cantidad"));
 				producto.setPrecio(resultado.getDouble("precio"));
 				producto.setCaducidad(resultado.getDate("caducidad"));
+				producto.setSeccion(modeloSeccion.getSeccion(resultado.getInt("id_seccion")));
 				productos.add(producto);
 			}
 			return productos;
@@ -36,4 +38,4 @@ public class ModeloProducto extends Conector {
 		return null;
 	}
 
-}//fin clase
+}// fin clase

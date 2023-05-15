@@ -10,6 +10,14 @@ public class Producto {
 	private int cantidad;
 	private double precio;
 	private Date caducidad;
+	private Seccion seccion;
+	
+	public Seccion getSeccion() {
+		return seccion;
+	}
+	public void setSeccion(Seccion seccion) {
+		this.seccion = seccion;
+	}
 	public int getId() {
 		return id;
 	}
