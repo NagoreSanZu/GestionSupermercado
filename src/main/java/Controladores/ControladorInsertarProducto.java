@@ -63,6 +63,8 @@ public class ControladorInsertarProducto extends HttpServlet {
 		producto.setCaducidad(Fechacaducidad);
 	
 		modeloProducto.insertarProducto(producto);
+		
+		response.sendRedirect("ControladorVerProductos");
 	
 	}
 

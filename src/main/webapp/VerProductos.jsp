@@ -11,6 +11,8 @@
 </head>
 <body>
 <h1>VER PRODUCTOS</h1>
+	<button><a href='ControladorInsertarProducto'> INSERTAR PRODUCTO</a></button>
+
 <table class="table table-striped">
 
 <tr>
