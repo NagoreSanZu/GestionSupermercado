@@ -39,18 +39,43 @@ public class ModeloProducto extends Conector {
 		return null;
 	}
 	
+	
+	public Boolean existeCodigo(String codigo) {
+		String sentenciaSelect = "SELECT codigo FROM productos WHERE codigo=?";
+
+		try {
+			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
+			pstSelect.setString(1, codigo);
+			ResultSet resultado = pstSelect.executeQuery();
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			Producto producto = new Producto();
+
+			resultado.next();
+
+		
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	
 	//insertar
 	
 	public void insertarProducto (Producto producto) {
 		PreparedStatement pstInsert;
 		try {
-			pstInsert=super.conexion.prepareStatement("INSERT INTO productos ( codigo, nombre, cantidad, precio,caducidad )VALUES (?,?,?,?,?)")	;
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			pstInsert=super.conexion.prepareStatement("INSERT INTO productos ( codigo, nombre, cantidad, precio,caducidad,id_seccion )VALUES (?,?,?,?,?,?)")	;
 			
 			pstInsert.setString(1, producto.getCodigo());
 			pstInsert.setString(2, producto.getNombre());
 			pstInsert.setInt(3, producto.getCantidad());
 			pstInsert.setDouble(4, producto.getPrecio());
 			pstInsert.setDate(5, new Date(producto.getCaducidad().getTime()));
+			pstInsert.setInt(6, producto.getSeccion().getId());
 			pstInsert.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();

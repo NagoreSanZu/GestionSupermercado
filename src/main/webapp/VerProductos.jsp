@@ -11,9 +11,9 @@
 </head>
 <body>
 <h1>VER PRODUCTOS</h1>
-	<button><a href='ControladorInsertarProducto'> INSERTAR PRODUCTO</a></button>
+	<a href='ControladorInsertarProducto'class="btn btn-primary"> INSERTAR PRODUCTO</a>
 
-<table class="table table-striped">
+<table class="table ">
 
 <tr>
 <th>ID</th>
