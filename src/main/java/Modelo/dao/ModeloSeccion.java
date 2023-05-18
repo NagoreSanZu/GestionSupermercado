@@ -10,7 +10,7 @@ import Modelo.dto.Seccion;
 public class ModeloSeccion extends Conector {
 
 	public Seccion getSeccion(int id) {
-		String senteciaSelect = "SELECT *FROM secciones WHERE id=?";
+		String senteciaSelect = "SELECT * FROM secciones WHERE id=?";
 
 		try {
 

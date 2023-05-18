@@ -36,6 +36,7 @@
 <td>${producto.caducidad}</td>
 <td>${producto.seccion.nombre}</td>
 
+<td><a  class="btn btn-primary"href="ControladorModificarProducto?id=${producto.id}">MODIFICAR</a> </td>
 
 </tr>
 
