@@ -57,7 +57,7 @@ public class ControladorVerProductos extends HttpServlet {
 		
 		String buscado = request.getParameter("buscador");
 		for (Producto producto : productos) {
-			if(producto.getCodigo().contains(buscado)) {
+			if(producto.getCodigo().contains(buscado) || producto.getNombre().contains(buscado)) {
 				productoEncontrados.add(producto);
 					
 			}
