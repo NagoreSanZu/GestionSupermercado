@@ -13,6 +13,18 @@
 <h1>VER PRODUCTOS</h1>
 	<a href='ControladorInsertarProducto'class="btn btn-primary"> INSERTAR PRODUCTO</a>
 
+<!-- BUSCADOR -->
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline" method="post" action="ControladorVerProductos">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="buscador">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
+<!-- FIN BUSCADOR -->
+
+
+<!-- TABLA -->
+
 <table class="table ">
 
 <tr>
@@ -43,5 +55,8 @@
 </c:forEach>
 
 </table>
+
+<!-- FIN TABLA -->
+
 </body>
 </html>

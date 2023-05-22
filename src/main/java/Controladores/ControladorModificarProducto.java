@@ -77,10 +77,8 @@ public class ControladorModificarProducto extends HttpServlet {
 			e.printStackTrace();
 		}
 		int id_seccion = Integer.parseInt(request.getParameter("id_seccion"));
-//		System.out.println(codigo);
-//		Boolean existe = modeloProducto.existeCodigo(codigo);
-//		System.out.println(existe);
-//		Boolean comprobar = true;
+		Boolean existe = modeloProducto.existeCodigo(codigo);
+		Boolean comprobar = true;
 //		if (existe == true) {
 //			comprobar = false;
 //			String mensaje = "Error, codigo ya existe ";
@@ -89,33 +87,33 @@ public class ControladorModificarProducto extends HttpServlet {
 //			doGet(request, response);
 //
 //		}
-//
-//		if (precio <= 0 && cantidad <= 0) {
-//			comprobar = false;
-//			String mensaje = "Error, cantida o precio igual o menor a cero";
-//			request.setAttribute("mensaje", mensaje);
-//			request.setAttribute("comprobar", comprobar);
-//			doGet(request, response);
-//
-//		}
-//
-//		if (id_seccion == 0) {
-//			comprobar = false;
-//			String mensaje = "Error, id seccion no puede ser igual a cero";
-//			request.setAttribute("mensaje", mensaje);
-//			request.setAttribute("comprobar", comprobar);
-//			doGet(request, response);
-//
-//		}
-//
-//		if (FechaCaducidad.before(new Date())) {
-//			comprobar = false;
-//			String mensaje = "Error, fecha mal insertada";
-//			request.setAttribute("mensaje", mensaje);
-//			request.setAttribute("comprobar", comprobar);
-//			doGet(request, response);
-//
-//		}
+
+		if (precio <= 0 && cantidad <= 0) {
+			comprobar = false;
+			String mensaje = "Error, cantida o precio igual o menor a cero";
+			request.setAttribute("mensaje", mensaje);
+			request.setAttribute("comprobar", comprobar);
+			doGet(request, response);
+
+		}
+
+		if (id_seccion == 0) {
+			comprobar = false;
+			String mensaje = "Error, id seccion no puede ser igual a cero";
+			request.setAttribute("mensaje", mensaje);
+			request.setAttribute("comprobar", comprobar);
+			doGet(request, response);
+
+		}
+
+		if (FechaCaducidad.before(new Date())) {
+			comprobar = false;
+			String mensaje = "Error, fecha mal insertada";
+			request.setAttribute("mensaje", mensaje);
+			request.setAttribute("comprobar", comprobar);
+			doGet(request, response);
+
+		}
 		producto.setId(id);
 		producto.setCodigo(codigo);
 		producto.setNombre(nombre);
@@ -123,12 +121,12 @@ public class ControladorModificarProducto extends HttpServlet {
 		producto.setPrecio(precio);
 		producto.setCaducidad(FechaCaducidad);
 		producto.setSeccion(modeloSeccion.getSeccion(id_seccion));
-//
-//		if (comprobar == true) {
+
+		if (comprobar == true) {
 		modeloProducto.modificarProducto(producto);
 		response.sendRedirect("ControladorVerProductos");
 
-//		}
+		}
 
 	}
 

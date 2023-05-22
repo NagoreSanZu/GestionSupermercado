@@ -18,14 +18,15 @@
 
 	<h1>MODIFICAR UN PRODUCTO</h1>
 
-	<!-- 
-<div class="alert alert-danger" role="alert">
+	
 
 <c:if test="${comprobar==false}">
+	<div class="alert alert-danger" role="alert">
 	${mensaje}
+	</div>
+	
 </c:if>
-</div>
- -->
+ 
 	<c:set var="producto" value="${ requestScope.producto }" />
 	<form method="post" action="ControladorModificarProducto">
 		<input type="hidden" name="id" value="${producto.id}">
@@ -62,9 +63,7 @@
 				</c:if>
 			</c:forEach>
 		</select> <br> <br> <br> <br> <input type=submit>
-		<button>
-			<a href='ControladorVerProductos'> VOLVER</a>
-		</button>
+			<a class="btn btn-primary"href='ControladorVerProductos'> VOLVER</a>
 	</form>
 
 </body>
