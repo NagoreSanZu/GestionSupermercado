@@ -17,10 +17,25 @@
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline" method="post" action="ControladorVerProductos">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="buscador">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="submit" value="nombreCodigo">Search</button>
   </form>
 </nav>
+
+
 <!-- FIN BUSCADOR -->
+
+
+<!-- ORDEN POR PRECIO -->
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline" method="post" action="ControladorVerProductos">
+    <input type="number" placeholder="Precio Minimo"  name="precioMinimo">
+    <input type="number" placeholder="Precio Maximo"  name="precioMaximo">
+    
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="submit" value="precio">Search</button>
+  </form>
+</nav>
+
+<!-- FIN ORDEN POR PRECIO -->
 
 
 <!-- TABLA -->

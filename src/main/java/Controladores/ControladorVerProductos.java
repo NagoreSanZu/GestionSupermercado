@@ -50,23 +50,41 @@ public class ControladorVerProductos extends HttpServlet {
 		ModeloProducto modeloProducto = new ModeloProducto();
 
 		ArrayList<Producto> productos = modeloProducto.verProductos();
-		ArrayList<Producto>productoEncontrados= new ArrayList<Producto>();
+		ArrayList<Producto> productoEncontrados = new ArrayList<Producto>();
 		
+		String submit = request.getParameter("submit");
+
 		modeloProducto.cerrarConexion();
-		
-		
+		if(submit.equals("nombreCodigo")) {
 		String buscado = request.getParameter("buscador");
 		for (Producto producto : productos) {
-			if(producto.getCodigo().contains(buscado) || producto.getNombre().contains(buscado)) {
+			if (producto.getCodigo().contains(buscado) || producto.getNombre().contains(buscado)) {
 				productoEncontrados.add(producto);
-					
+
 			}
 		}
-		
+
 		request.setAttribute("productos", productoEncontrados);
 		request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
-
+		}
 		
+		if(submit.equals("precio")) {
+		//para diferenciar por precio
+		Double precioMinimo = Double.parseDouble(request.getParameter("precioMinimo"));
+		Double precioMaximo = Double.parseDouble(request.getParameter("precioMaximo"));
+
+		ArrayList<Producto> productoPrecios = new ArrayList<Producto>();
+		for (Producto producto : productos) {
+			if (producto.getPrecio() > precioMinimo && producto.getPrecio() < precioMaximo) {
+				productoPrecios.add(producto);
+
+			}
+		}
+
+		request.setAttribute("productos", productoPrecios);
+		request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
+		
+		}
 
 	}
 
