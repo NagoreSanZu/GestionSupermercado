@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Modelo.dao.CompararAscDesc;
+import Modelo.dao.CompararDESC;
 import Modelo.dao.ModeloProducto;
 import Modelo.dto.Producto;
 
@@ -33,12 +35,30 @@ public class ControladorVerProductos extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		ModeloProducto modeloProducto = new ModeloProducto();
 
 		ArrayList<Producto> productos = modeloProducto.verProductos();
 		modeloProducto.cerrarConexion();
+
+		String codOrdenar = request.getParameter("codOrdenar");
+		if (codOrdenar == null) {
+			codOrdenar="ASC";
+		}
+
+		if (codOrdenar.equals("ASC")) {
+			productos.sort(new CompararAscDesc());
+
+		}
+
+		if (codOrdenar.equals("DESC")) {
+			productos.sort(new CompararDESC());
+
+		}
+
 		request.setAttribute("productos", productos);
 		request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -51,39 +71,39 @@ public class ControladorVerProductos extends HttpServlet {
 
 		ArrayList<Producto> productos = modeloProducto.verProductos();
 		ArrayList<Producto> productoEncontrados = new ArrayList<Producto>();
-		
+
 		String submit = request.getParameter("submit");
 
 		modeloProducto.cerrarConexion();
-		if(submit.equals("nombreCodigo")) {
-		String buscado = request.getParameter("buscador");
-		for (Producto producto : productos) {
-			if (producto.getCodigo().contains(buscado) || producto.getNombre().contains(buscado)) {
-				productoEncontrados.add(producto);
+		if (submit.equals("nombreCodigo")) {
+			String buscado = request.getParameter("buscador");
+			for (Producto producto : productos) {
+				if (producto.getCodigo().contains(buscado) || producto.getNombre().contains(buscado)) {
+					productoEncontrados.add(producto);
 
+				}
 			}
+
+			request.setAttribute("productos", productoEncontrados);
+			request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
 		}
 
-		request.setAttribute("productos", productoEncontrados);
-		request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
-		}
-		
-		if(submit.equals("precio")) {
-		//para diferenciar por precio
-		Double precioMinimo = Double.parseDouble(request.getParameter("precioMinimo"));
-		Double precioMaximo = Double.parseDouble(request.getParameter("precioMaximo"));
+		if (submit.equals("precio")) {
+			// para diferenciar por precio
+			Double precioMinimo = Double.parseDouble(request.getParameter("precioMinimo"));
+			Double precioMaximo = Double.parseDouble(request.getParameter("precioMaximo"));
 
-		ArrayList<Producto> productoPrecios = new ArrayList<Producto>();
-		for (Producto producto : productos) {
-			if (producto.getPrecio() > precioMinimo && producto.getPrecio() < precioMaximo) {
-				productoPrecios.add(producto);
+			ArrayList<Producto> productoPrecios = new ArrayList<Producto>();
+			for (Producto producto : productos) {
+				if (producto.getPrecio() > precioMinimo && producto.getPrecio() < precioMaximo) {
+					productoPrecios.add(producto);
 
+				}
 			}
-		}
 
-		request.setAttribute("productos", productoPrecios);
-		request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
-		
+			request.setAttribute("productos", productoPrecios);
+			request.getRequestDispatcher("VerProductos.jsp").forward(request, response);
+
 		}
 
 	}

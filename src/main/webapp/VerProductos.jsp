@@ -44,7 +44,12 @@
 
 <tr>
 <th>ID</th>
-<th>CODIGO</th>
+
+<th>CODIGO
+
+<a href="ControladorVerProductos?codOrdenar=ASC">ASC</a>
+<a href="ControladorVerProductos?codOrdenar=DESC">DESC</a>
+</th>
 <th>NOMBRE</th>
 <th>CANTIDAD</th>
 <th>PRECIO</th>
