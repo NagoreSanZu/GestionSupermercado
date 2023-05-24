@@ -43,7 +43,7 @@ public class ControladorVerProductos extends HttpServlet {
 
 		String codOrdenar = request.getParameter("codOrdenar");
 		if (codOrdenar == null) {
-			codOrdenar="ASC";
+			codOrdenar = "ASC";
 		}
 
 		if (codOrdenar.equals("ASC")) {

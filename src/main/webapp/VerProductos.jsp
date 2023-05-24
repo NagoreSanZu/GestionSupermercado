@@ -79,6 +79,10 @@
 				<td><a class="btn btn-primary"
 					href="ControladorModificarProducto?id=${producto.id}">MODIFICAR</a>
 				</td>
+				
+				<td><a class="btn btn-danger"
+					href="ControladorEliminarProducto?id=${producto.id}">ELIMINAR</a>
+				</td>
 
 			</tr>
 

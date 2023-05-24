@@ -4,6 +4,11 @@ import java.util.Date;
 
 public class Producto {
 
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", cantidad=" + cantidad
+				+ ", precio=" + precio + ", caducidad=" + caducidad + ", seccion=" + seccion + "]";
+	}
 	private int id;
 	private String codigo;
 	private String nombre;
