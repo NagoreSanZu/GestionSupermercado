@@ -69,6 +69,28 @@ public class ModeloProducto extends Conector {
 
 		return null;
 	}
+	
+	
+	public int ultimoProducto() {
+		String sentenciaSelect = "SELECT max(id) FROM productos ";
+
+		try {
+			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
+		
+			ResultSet resultado = pstSelect.executeQuery();
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			resultado.next(); 
+				Producto producto = new Producto();
+
+				producto.setId(resultado.getInt("max(id)"));
+				
+			return producto.getId();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+
+	}
 
 
 	// si exist el codigo, te devuelve un boolean
@@ -84,7 +106,7 @@ public class ModeloProducto extends Conector {
 
 			resultado.next();
 
-			return true;
+			return resultado.getString("codigo").equals(codigo)? true : false;
 
 		} catch (SQLException e) {
 			e.printStackTrace();

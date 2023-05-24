@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import Modelo.dao.ModeloProducto;
 import Modelo.dao.ModeloSeccion;
+import Modelo.dao.ModeloSupermercado;
+import Modelo.dao.ModeloSupermercadoProducto;
 import Modelo.dto.Producto;
+import Modelo.dto.ProductoSupermercado;
 import Modelo.dto.Seccion;
+import Modelo.dto.Supermercado;
 
 /**
  * Servlet implementation class ControladorInsertarProducto
@@ -38,9 +43,11 @@ public class ControladorInsertarProducto extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ModeloSeccion modeloSeccion = new ModeloSeccion();
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
 
 		ArrayList<Seccion> secciones = modeloSeccion.getSecciones();
-
+		ArrayList<Supermercado> supermercados = modeloSupermercado.getsupermercados();
+		request.setAttribute("supermercados", supermercados);
 		request.setAttribute("secciones", secciones);
 		request.getRequestDispatcher("Insertar.jsp").forward(request, response);
 
@@ -70,9 +77,9 @@ public class ControladorInsertarProducto extends HttpServlet {
 		}
 
 		int id_seccion = Integer.parseInt(request.getParameter("id_seccion"));
-		System.out.println(codigo);
+
+		// pruebas
 		Boolean existe = modeloProducto.existeCodigo(codigo);
-		System.out.println(existe);
 		Boolean comprobar = true;
 		if (existe == true) {
 			comprobar = false;
@@ -109,6 +116,8 @@ public class ControladorInsertarProducto extends HttpServlet {
 			doGet(request, response);
 
 		}
+
+		// fin pruebas
 		producto.setCodigo(codigo);
 		producto.setNombre(nombre);
 		producto.setCantidad(cantidad);
@@ -118,9 +127,30 @@ public class ControladorInsertarProducto extends HttpServlet {
 
 		if (comprobar == true) {
 			modeloProducto.insertarProducto(producto);
+			
+			// insertar en productos-supermecados
+			ModeloSupermercadoProducto ModeloSP = new ModeloSupermercadoProducto();
+			String[] supermercadosP = request.getParameterValues("supermercados");
+			int idUltimo = modeloProducto.ultimoProducto();
+			Producto producto2 = modeloProducto.verProducto(idUltimo);
+			ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+			
+			for (int i = 0; i < supermercadosP.length; i++) {
+				ProductoSupermercado ps = new ProductoSupermercado();
+				ps.setProducto(producto2);
+				ps.setSupermercado(modeloSupermercado.getsupermercado(Integer.parseInt(supermercadosP[i])));
+				ModeloSP.insertarSupermercadoProducto(ps);
+			}
+
+			// fin insertar en productos-supermecados
+			
 			response.sendRedirect("ControladorVerProductos");
+			
 
 		}
+		
+		
+		
 
 	}
 

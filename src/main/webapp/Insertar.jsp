@@ -40,11 +40,20 @@
 	<br>
 	<br>
 	
-	<br>
-	<br>
+
+<c:forEach items="${supermercados }" var="supermercado">
+<input class="form-check-input" type="checkbox" value="${supermercado.id }" id="flexCheckIndeterminateDisabled" name="supermercados" >
+<label class="form-check-label" for="flexCheckIndeterminateDisabled">
+   ${supermercado.nombre}</label>
+</c:forEach>	
+
+<br>
+<br>
+
+
+
 	<input type=submit> 
 	<a class="btn btn-primary" href='ControladorVerProductos'> VOLVER</a>
-	
 </form>
 
 </body>
