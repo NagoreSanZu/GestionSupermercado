@@ -51,11 +51,11 @@ public class ControladorEliminarProducto extends HttpServlet {
 
 			ArrayList<ProductoSupermercado> sps = modeloSP.verProductosSuper();
 			for (ProductoSupermercado productoSupermercado : sps) {
-		
+
 				if (productoSupermercado.getProducto().getId() == producto.getId()) {
 					System.out.println(producto.getId());
 					modeloSP.eliminarSupermercadoPro(producto.getId());
-				} 
+				}
 				if (productoSupermercado.getProducto().getId() != producto.getId()) {
 					modeloProducto.eliminarProducto(producto.getId());
 				}
@@ -72,6 +72,25 @@ public class ControladorEliminarProducto extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		ModeloProducto modeloProducto = new ModeloProducto();
+		String codigos = request.getParameter("EliminarPorCodigos");
+		String[] productoCodigo = codigos.split(",");
+		Boolean existe = true;
+		for (int i = 0;  i < productoCodigo.length; i++) {
+			if(modeloProducto.existeCodigo(productoCodigo[i]) == false) {
+				existe = false;
+			}
+
+		}
+
+		if (existe == true) {
+			for (int i = 0; i < productoCodigo.length; i++) {
+				modeloProducto.eliminarProductoCodigo(productoCodigo[i]);
+
+			}
+		}
+
+		response.sendRedirect("ControladorVerProductos");
 
 	}
 

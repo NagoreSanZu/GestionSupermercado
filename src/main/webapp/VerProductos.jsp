@@ -28,9 +28,19 @@
 				name="submit" value="nombreCodigo">Search</button>
 		</form>
 	</nav>
-
-
 	<!-- FIN BUSCADOR -->
+	<!-- ELIMINAR -->
+
+	<form action="ControladorEliminarProducto" method="post">
+		<input class="form-control mr-sm-2" type="text"
+			placeholder="Elimiar por codigo" aria-label="text"
+			name="EliminarPorCodigos"> 
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+			name="submit">Eliminar</button>
+	</form>
+
+	<!-- FIN ELIMINAR -->
+
 
 
 	<!-- ORDEN POR PRECIO -->
@@ -79,10 +89,9 @@
 				<td><a class="btn btn-primary"
 					href="ControladorModificarProducto?id=${producto.id}">MODIFICAR</a>
 				</td>
-				
+
 				<td><a class="btn btn-danger"
-					href="ControladorEliminarProducto?id=${producto.id}">ELIMINAR</a>
-				</td>
+					href="ControladorEliminarProducto?id=${producto.id}">ELIMINAR</a></td>
 
 			</tr>
 

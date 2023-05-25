@@ -71,6 +71,34 @@ public class ModeloProducto extends Conector {
 	}
 	
 	
+	public Producto verProductoCodigo(String codigo) {
+		String sentenciaSelect = "SELECT * FROM productos WHERE codigo=?";
+
+		try {
+			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
+			pstSelect.setString(1, codigo);
+			ResultSet resultado = pstSelect.executeQuery();
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			resultado.next(); 
+				Producto producto = new Producto();
+
+				producto.setId(resultado.getInt("id"));
+				producto.setCodigo(resultado.getString("codigo"));
+				producto.setNombre(resultado.getString("nombre"));
+				producto.setCantidad(resultado.getInt("cantidad"));
+				producto.setPrecio(resultado.getDouble("precio"));
+				producto.setCaducidad(resultado.getDate("caducidad"));
+				producto.setSeccion(modeloSeccion.getSeccion(resultado.getInt("id_seccion")));
+			
+			return producto;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
 	public int ultimoProducto() {
 		String sentenciaSelect = "SELECT max(id) FROM productos ";
 
@@ -106,7 +134,7 @@ public class ModeloProducto extends Conector {
 
 			resultado.next();
 
-			return resultado.getString("codigo").equals(codigo)? true : false;
+			return resultado.getString("codigo") != null? true : false;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,6 +212,18 @@ public class ModeloProducto extends Conector {
 		try {
 			pstEliminar = super.conexion.prepareStatement("DELETE FROM productos WHERE id=?");
 			pstEliminar.setInt(1, id);
+			pstEliminar.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void eliminarProductoCodigo(String codigo) {
+		PreparedStatement pstEliminar;
+		
+		try {
+			pstEliminar = super.conexion.prepareStatement("DELETE FROM productos WHERE codigo=?");
+			pstEliminar.setString(1, codigo);
 			pstEliminar.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
