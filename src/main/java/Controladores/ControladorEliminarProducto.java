@@ -38,6 +38,7 @@ public class ControladorEliminarProducto extends HttpServlet {
 		ModeloProducto modeloProducto = new ModeloProducto();
 		int id = Integer.parseInt(request.getParameter("id"));
 		Producto producto = modeloProducto.verProducto(id);
+
 		int cantidad = 0;
 		if (producto.getCantidad() > 0) {
 			cantidad = producto.getCantidad() - 1;
@@ -73,21 +74,34 @@ public class ControladorEliminarProducto extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ModeloProducto modeloProducto = new ModeloProducto();
-		String codigos = request.getParameter("EliminarPorCodigos");
-		String[] productoCodigo = codigos.split(",");
-		Boolean existe = true;
-		for (int i = 0;  i < productoCodigo.length; i++) {
-			if(modeloProducto.existeCodigo(productoCodigo[i]) == false) {
-				existe = false;
+
+		String eliminar = request.getParameter("submit");
+
+		if (eliminar.equals("eliminar")) {
+			String[] borrarProductos = request.getParameterValues("borrarProductos");
+
+			for (int i = 0; i < borrarProductos.length; i++) {
+				modeloProducto.eliminarProducto(Integer.parseInt(borrarProductos[i]));
 			}
 
-		}
-
-		if (existe == true) {
+		} else {
+			String codigos = request.getParameter("EliminarPorCodigos");
+			String[] productoCodigo = codigos.split(",");
+			Boolean existe = true;
 			for (int i = 0; i < productoCodigo.length; i++) {
-				modeloProducto.eliminarProductoCodigo(productoCodigo[i]);
+				if (modeloProducto.existeCodigo(productoCodigo[i]) == false) {
+					existe = false;
+				}
 
 			}
+
+			if (existe == true) {
+				for (int i = 0; i < productoCodigo.length; i++) {
+					modeloProducto.eliminarProductoCodigo(productoCodigo[i]);
+
+				}
+			}
+
 		}
 
 		response.sendRedirect("ControladorVerProductos");

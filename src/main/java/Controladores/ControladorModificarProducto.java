@@ -14,8 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import Modelo.dao.ModeloProducto;
 import Modelo.dao.ModeloSeccion;
+import Modelo.dao.ModeloSupermercado;
+import Modelo.dao.ModeloSupermercadoProducto;
 import Modelo.dto.Producto;
+import Modelo.dto.ProductoSupermercado;
 import Modelo.dto.Seccion;
+import Modelo.dto.Supermercado;
 
 /**
  * Servlet implementation class ControladorModificarProducto
@@ -39,6 +43,8 @@ public class ControladorModificarProducto extends HttpServlet {
 			throws ServletException, IOException {
 		ModeloProducto modeloProducto = new ModeloProducto();
 		ModeloSeccion modeloSeccion = new ModeloSeccion();
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+		ModeloSupermercadoProducto ps = new ModeloSupermercadoProducto();
 
 		ArrayList<Seccion> secciones = modeloSeccion.getSecciones();
 
@@ -46,8 +52,13 @@ public class ControladorModificarProducto extends HttpServlet {
 		Producto producto = new Producto();
 
 		int id = Integer.parseInt(request.getParameter("id"));
+		ArrayList<Supermercado> supermercados = modeloSupermercado.getsupermercados();
 
 		producto = modeloProducto.verProducto(id);
+		
+		ArrayList<ProductoSupermercado> productosSuper = ps.getProductosSuperId(id);
+		request.setAttribute("supermercados", supermercados);
+		request.setAttribute("productosSuper", productosSuper);
 		request.setAttribute("secciones", secciones);
 		request.setAttribute("producto", producto);
 		request.getRequestDispatcher("ModificarProducto.jsp").forward(request, response);
@@ -79,41 +90,7 @@ public class ControladorModificarProducto extends HttpServlet {
 		int id_seccion = Integer.parseInt(request.getParameter("id_seccion"));
 		Boolean existe = modeloProducto.existeCodigo(codigo);
 		Boolean comprobar = true;
-//		if (existe == true) {
-//			comprobar = false;
-//			String mensaje = "Error, codigo ya existe ";
-//			request.setAttribute("mensaje", mensaje);
-////			request.setAttribute("comprobar", comprobar);
-////			doGet(request, response);
-////
-////		}
-//
-//		if (precio <= 0 && cantidad <= 0) {
-//			comprobar = false;
-//			String mensaje = "Error, cantida o precio igual o menor a cero";
-//			request.setAttribute("mensaje", mensaje);
-//			request.setAttribute("comprobar", comprobar);
-//			doGet(request, response);
-//
-//		}
-//
-//		if (id_seccion == 0) {
-//			comprobar = false;
-//			String mensaje = "Error, id seccion no puede ser igual a cero";
-//			request.setAttribute("mensaje", mensaje);
-//			request.setAttribute("comprobar", comprobar);
-//			doGet(request, response);
-//
-//		}
-//
-//		if (FechaCaducidad.before(new Date())) {
-//			comprobar = false;
-//			String mensaje = "Error, fecha mal insertada";
-//			request.setAttribute("mensaje", mensaje);
-//			request.setAttribute("comprobar", comprobar);
-//			doGet(request, response);
-//
-//		}
+
 		producto.setId(id);
 		producto.setCodigo(codigo);
 		producto.setNombre(nombre);
@@ -122,11 +99,23 @@ public class ControladorModificarProducto extends HttpServlet {
 		producto.setCaducidad(FechaCaducidad);
 		producto.setSeccion(modeloSeccion.getSeccion(id_seccion));
 
-		if (comprobar == true) {
-		modeloProducto.modificarProducto(producto);
-		response.sendRedirect("ControladorVerProductos");
 
+		modeloProducto.modificarProducto(producto);
+		
+		ModeloSupermercadoProducto ModeloSP = new ModeloSupermercadoProducto();
+		String[] supermercadosP = request.getParameterValues("supermercados");
+		int idUltimo = modeloProducto.ultimoProducto();
+		Producto producto2 = modeloProducto.verProducto(idUltimo);
+		ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+		
+		for (int i = 0; i < supermercadosP.length; i++) {
+			ProductoSupermercado ps = new ProductoSupermercado();
+			ps.setProducto(producto2);
+			ps.setSupermercado(modeloSupermercado.getsupermercado(Integer.parseInt(supermercadosP[i])));
+			ModeloSP.actualizarSupermercadoProducto(ps);
 		}
+
+		response.sendRedirect("ControladorVerProductos");
 
 	}
 

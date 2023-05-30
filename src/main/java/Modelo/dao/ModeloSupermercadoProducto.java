@@ -28,6 +28,24 @@ public class ModeloSupermercadoProducto extends Conector {
 		}
 	}
 
+	public void actualizarSupermercadoProducto (ProductoSupermercado ps) {
+		PreparedStatement pstUpdate;
+
+		try {
+			pstUpdate = super.conexion.prepareStatement(
+					"UPDATE productos_supermercados SET id_producto=?, id_supermercado=? WHERE id =?");
+			ModeloProducto modeloProducto = new ModeloProducto();
+			ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+
+			pstUpdate.setInt(1, ps.getProducto().getId());
+			pstUpdate.setInt(2, ps.getSupermercado().getId());
+			
+			pstUpdate.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public void eliminarSupermercadoPro(int id) {
 		PreparedStatement pstEliminar;
 
@@ -46,6 +64,37 @@ public class ModeloSupermercadoProducto extends Conector {
 
 		try {
 			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
+			ModeloProducto modeloProducto = new ModeloProducto();
+			ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
+			ArrayList<ProductoSupermercado> productosSuper = new ArrayList<ProductoSupermercado>();
+			ResultSet resultado = pstSelect.executeQuery();
+			
+			while (resultado.next()) {
+				ProductoSupermercado productoSuper = new ProductoSupermercado();
+				
+				productoSuper.setId(resultado.getInt("id"));
+				productoSuper.setProducto(modeloProducto.verProducto(resultado.getInt("id_producto")));
+				productoSuper.setSupermercado(modeloSupermercado.getsupermercado(resultado.getInt("id_supermercado")));
+				productosSuper.add(productoSuper);
+
+			
+			}
+			return productosSuper;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+
+	public ArrayList<ProductoSupermercado> getProductosSuperId(int id) {
+		String sentenciaSelect = "SELECT * FROM productos_supermercados WHERE id_producto=?";
+
+		try {
+			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
+			pstSelect.setInt(1, id);
+
 			ModeloProducto modeloProducto = new ModeloProducto();
 			ModeloSupermercado modeloSupermercado = new ModeloSupermercado();
 			ArrayList<ProductoSupermercado> productosSuper = new ArrayList<ProductoSupermercado>();

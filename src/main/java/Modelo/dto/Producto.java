@@ -16,7 +16,14 @@ public class Producto {
 	private double precio;
 	private Date caducidad;
 	private Seccion seccion;
+	ProductoSupermercado ps;
 	
+	public ProductoSupermercado getPs() {
+		return ps;
+	}
+	public void setPs(ProductoSupermercado ps) {
+		this.ps = ps;
+	}
 	public Seccion getSeccion() {
 		return seccion;
 	}

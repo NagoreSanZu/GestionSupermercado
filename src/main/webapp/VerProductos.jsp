@@ -59,10 +59,16 @@
 
 
 	<!-- TABLA -->
-
-	<table class="table ">
-
+	
+			<form method ="post" action ="ControladorEliminarProducto">
+			
+				<a  href="ControladorEliminarProducto?id=${producto.id}"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+				name="submit" value="eliminar">ELIMINAR</button></a>
+			
+	
+			<table class="table ">
 		<tr>
+			<th>
 			<th>ID</th>
 
 			<th>CODIGO <a href="ControladorVerProductos?codOrdenar=ASC">ASC</a>
@@ -78,8 +84,10 @@
 
 		<c:forEach items="${productos}" var="producto">
 			<tr>
+		
+				<th><input class="form-check-input" type="checkbox" value="${producto.id }" id="flexCheckIndeterminateDisabled" name="borrarProductos"  ></th>
 				<th scope="row">${producto.id}</th>
-				<td>${producto.codigo}</td>
+				<td> ${producto.codigo}</td>
 				<td>${producto.nombre}</td>
 				<td>${producto.cantidad}</td>
 				<td>${producto.precio}</td>
@@ -92,13 +100,21 @@
 
 				<td><a class="btn btn-danger"
 					href="ControladorEliminarProducto?id=${producto.id}">ELIMINAR</a></td>
+				
+				<td><a class="btn btn-danger"
+					href="ControladorComprar?id=${producto.id}">COMPRAR</a></td>
 
 			</tr>
 
 		</c:forEach>
 
 	</table>
+			
+	</form>
+	
+	
 
+	
 	<!-- FIN TABLA -->
 
 </body>

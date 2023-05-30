@@ -142,6 +142,27 @@ public class ModeloProducto extends Conector {
 
 		return false;
 	}
+	
+	public Boolean existeId(int id) {
+		String sentenciaSelect = "SELECT codigo FROM productos WHERE id=?";
+
+		try {
+			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
+			pstSelect.setInt(1, id);
+			ResultSet resultado = pstSelect.executeQuery();
+			ModeloSeccion modeloSeccion = new ModeloSeccion();
+			Producto producto = new Producto();
+
+			resultado.next();
+
+			return resultado.getString("id") != null? true : false;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 
 	// insertar un producto
 

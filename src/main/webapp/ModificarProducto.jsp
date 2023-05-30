@@ -18,15 +18,13 @@
 
 	<h1>MODIFICAR UN PRODUCTO</h1>
 
-	
 
-<c:if test="${comprobar==false}">
-	<div class="alert alert-danger" role="alert">
-	${mensaje}
-	</div>
-	
-</c:if>
- 
+
+	<c:if test="${comprobar==false}">
+		<div class="alert alert-danger" role="alert">${mensaje}</div>
+
+	</c:if>
+
 	<c:set var="producto" value="${ requestScope.producto }" />
 	<form method="post" action="ControladorModificarProducto">
 		<input type="hidden" name="id" value="${producto.id}">
@@ -62,8 +60,32 @@
 					<option value="${seccion.id}">${seccion.nombre}</option>
 				</c:if>
 			</c:forEach>
-		</select> <br> <br> <br> <br> <input type=submit>
-			<a class="btn btn-primary"href='ControladorVerProductos'> VOLVER</a>
+		</select>
+
+
+		<c:forEach items="${supermercados }" var="supermercado">
+			<c:forEach items="${productosSuper }" var="ps">
+				<c:if test="${supermercado.id == ps.supermercado.id }">
+					<input class="form-check-input"  type="checkbox"
+						value="${supermercado.id }"   id="flexCheckIndeterminateDisabled"
+						name="supermercados" checked>
+					<label class="form-check-label"
+						for="flexCheckIndeterminateDisabled" >
+						${supermercado.nombre}</label>
+				</c:if>
+
+			</c:forEach>
+			<input class="form-check-input" type="checkbox"
+				value="${supermercado.id }" id="flexCheckIndeterminateDisabled"
+				name="supermercados">
+			<label class="form-check-label" for="flexCheckIndeterminateDisabled">
+				${supermercado.nombre}</label>
+		</c:forEach>
+
+
+
+		<br> <br> <br> <br> <input type=submit> <a
+			class="btn btn-primary" href='ControladorVerProductos'> VOLVER</a>
 	</form>
 
 </body>
