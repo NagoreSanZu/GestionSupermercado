@@ -84,7 +84,7 @@ public class ControladorEliminarProducto extends HttpServlet {
 				modeloProducto.eliminarProducto(Integer.parseInt(borrarProductos[i]));
 			}
 
-		} else {
+		} else if (eliminar.equals("eliminarBuscador")) {
 			String codigos = request.getParameter("EliminarPorCodigos");
 			String[] productoCodigo = codigos.split(",");
 			Boolean existe = true;

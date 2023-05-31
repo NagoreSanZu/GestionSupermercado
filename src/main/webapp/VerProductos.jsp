@@ -6,6 +6,8 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+	
+	<script src="https://kit.fontawesome.com/5b4d884f86.js" crossorigin="anonymous"></script>
 
 <!DOCTYPE html>
 <html>
@@ -15,6 +17,7 @@
 </head>
 <body>
 	<h1>VER PRODUCTOS</h1>
+	<div><i class="fa-solid fa-cart-shopping" style="color: #005eff;"></i> ${productosComprados.size() }</div>
 	<a href='ControladorInsertarProducto' class="btn btn-primary">
 		INSERTAR PRODUCTO</a>
 
@@ -36,7 +39,7 @@
 			placeholder="Elimiar por codigo" aria-label="text"
 			name="EliminarPorCodigos"> 
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-			name="submit">Eliminar</button>
+			name="submit" value="eliminarBuscador">Eliminar</button>
 	</form>
 
 	<!-- FIN ELIMINAR -->
@@ -57,6 +60,18 @@
 
 	<!-- FIN ORDEN POR PRECIO -->
 
+	<!-- FILTRO POR abc-->
+	<nav class="navbar navbar-light bg-light">
+		<form class="form-inline" method="post"
+			action="ControladorVerProductos">
+			<input type="text" placeholder="primera letra" name="PrimeraLetra">
+			<input type="text" placeholder="Segunda Letra " name="SegundaLetra">
+
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+				name="submit" value="abcOrdenar">Search</button>
+		</form>
+	</nav>
+	<!-- filtro abc fin -->
 
 	<!-- TABLA -->
 	
@@ -76,8 +91,11 @@
 			</th>
 			<th>NOMBRE</th>
 			<th>CANTIDAD</th>
-			<th>PRECIO</th>
-			<th>CADUCIDAD</th>
+			<th>PRECIO  <a href="ControladorVerProductos?ordenarPrecio=DESC">DESC</a>
+			 <a href="ControladorVerProductos?ordenarPrecio=ASC">ASC</a>
+			</th>
+			<th>CADUCIDAD <a href="ControladorVerProductos?fechaComparar=DESC">DESC</a> 
+			<a href="ControladorVerProductos?fechaComparar=ASC">ASC</a></th>
 			<th>SECCION</th>
 
 		</tr>
@@ -101,7 +119,7 @@
 				<td><a class="btn btn-danger"
 					href="ControladorEliminarProducto?id=${producto.id}">ELIMINAR</a></td>
 				
-				<td><a class="btn btn-danger"
+				<td><a class="btn btn-primary"
 					href="ControladorComprar?id=${producto.id}">COMPRAR</a></td>
 
 			</tr>

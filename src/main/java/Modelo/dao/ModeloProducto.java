@@ -129,7 +129,6 @@ public class ModeloProducto extends Conector {
 			PreparedStatement pstSelect = super.conexion.prepareStatement(sentenciaSelect);
 			pstSelect.setString(1, codigo);
 			ResultSet resultado = pstSelect.executeQuery();
-			ModeloSeccion modeloSeccion = new ModeloSeccion();
 			Producto producto = new Producto();
 
 			resultado.next();
